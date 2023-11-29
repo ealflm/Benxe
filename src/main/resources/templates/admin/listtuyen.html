@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    	<title>Bến xe miền đông</title>
+    
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:replace="layoutadmin :: link-css"></th:block>
+    <th:block th:replace="layout :: link-css"></th:block>
+</head>
+
+<body id="page-top">
+    <div  id="wrapper">
+
+        <!-- Sidebar -->
+        <th:block th:replace="layoutadmin :: sidebar"></th:block>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <th:block th:replace="layoutadmin :: navbar"></th:block>
+            <!-- Main Content -->
+            <button class="col-6 btn btn-success btn-block fa-lg mb-3 align-self-center" onclick="location.href='/admin/createtuyen'">Thêm tuyến</button>
+
+            <main class="table">
+                <section class="table__header">
+                    <h1 style="margin-left: 30px; font-family: Comic Sans MScursive;">Vé dành cho bạn</h1>
+                    <div class="input-group">
+                        <input type="search" placeholder="  Tìm theo...">
+                        <img src="img/search.png" alt="">
+                    </div>
+                </section>
+                <section class="table__body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th> Điểm đi <span class="icon-arrow">&UpArrow;</span></th>
+                                <th> Điểm đến <span class="icon-arrow">&UpArrow;</span></th>
+                                <th> Thời gian về bến <span class="icon-arrow">&UpArrow;</span></th>
+                                <th> Thời gian xuất bến <span class="icon-arrow">&UpArrow;</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="tuyen : ${tuyens}">
+                                <td th:text="${tuyen.diemDi.DiaDiem}"></td>
+                                <td th:text="${tuyen.diemDen.DiaDiem}"></td>
+                                <td th:text="${tuyen.ThoiGianXuatBen}"></td>
+                                <td th:text="${tuyen.ThoiGianVeBen}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <th:block th:replace="layoutadmin :: link-javascript"></th:block>
+    <script>
+        $(document).ready(function() {
+            $('#createtuyen').submit(function(event) {
+                event.preventDefault(); 
+                $.ajax({
+                    url: '/admin/createtuyen',
+                    type: 'POST',
+                    data: $('#createTuyen').serialize(),
+                    success: function(response) {
+                        if (response.success) {
+                            alert("Thêm thành công");
+                            window.location.href = '/admin/qltuyen';
+                        } 
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="../../static/js/table.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bến xe miền đông</title>
+    <th:block th:replace="layoutnhaxe :: link-css"></th:block>
+</head>
+
+<body id="page-top">
+    <div  id="wrapper">
+        <th:block th:replace="layoutnhaxe :: sidebar"></th:block>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <th:block th:replace="layoutnhaxe :: navbar"></th:block>
+            <!--==================================== Main Content===================================== -->
+            <div id="content">
+                <div class="container-fluid">
+                    <table class="table">
+                        <tr>
+                            <th>BKS</th>
+                            <th>Ngày chạy</th>
+                            <th>Số vị trí trống</th>
+                            <th>Giá vé</th>
+                            <th>Điểm đến</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr th:each="chuyen : ${chuyenxes}">
+                            <td th:text="${chuyen.xe.BKS}" ></td>
+                            <td th:text="${chuyen.NgayChay}"></td>
+                            <td th:text="${chuyen.SoViTriConTrong}"></td>
+                            <td th:text="${chuyen.GiaVe.Gia}"></td>
+                            <td th:text="${chuyen.Tuyen.DiemDen}"></td>
+                            <td>
+                                <a th:href="@{/nhaxe/xemkhachhang/{id}(id=${chuyen.MaChuyenXe})}">Xem khách hàng</a> |
+                                <a th:href="@{/nhaxe/xemhoadon/{id}(id=${chuyen.MaChuyenXe})}">Xem các hóa đơn</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <!-- ================================== End Main Content ==================================-->
+            </div>
+        </div>
+    </div>
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <th:block th:replace="layoutnhaxe :: link-javascript"></th:block>
+</body>
+
+</html>
